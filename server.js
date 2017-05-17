@@ -4,6 +4,7 @@ var http = require('http');
 
 var port = 3300;
 app.set('port', port);
+console.log("Listening on port " + port);
 
 var server = http.createServer(app);
 

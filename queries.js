@@ -13,7 +13,8 @@ function getUser(req, res, next) {
         if(err) {
           return console.error('error running query', err);
         }
-        res.status(200).send('number:', result);
+        console.log(res.statusCode);
+        res.status(200).json(result.rows[0]);
     });
 }
 
