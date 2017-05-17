@@ -1,3 +1,10 @@
+/*
+ Ubuntu instructions
+ 1. install using postgres apt
+ 2. move schema file to postgres user home /var/lib/postgresql/
+ 3. run file 'sudo -u postgres psql -f /var/lib/postgresql/schema.sql'
+*/
+
 drop database if exists twitterclone;
 create database twitterclone;
 
