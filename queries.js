@@ -2,21 +2,38 @@ const db = require('./db');
 
 function getUsers(req, res, next) {
     db.query('SELECT * FROM users', function (err, result) {
-        // console.log(result);
         res.send(result.rows);
     });
 }
 
-function getUser(req, res, next) {
-    var userId = parseInt(req.params.id);
-    db.query('SELECT * FROM users WHERE id = $1', [userId], function (err, result) {
+function getUserByLastNameOrId(req, res, next) {
+	var queryString = 'SELECT * FROM users WHERE lower(lastname) = $1';
+    var searchTerm = req.params.id.match(/[a-z]/gi);
+    if (searchTerm === null) {
+        searchTerm = parseInt(req.params.id);
+        queryString = 'SELECT * FROM users WHERE id = $1';
+    } else {
+        searchTerm = searchTerm.join('');
+    }
+
+    db.query(queryString, [searchTerm], function (err, result) {
         if(err) {
           return console.error('error running query', err);
         }
-        res.status(200).send('number:', result);
+
+        res.status(200).json(result.rows);
     });
 }
 
+function createUser(req, res, next) {
+    req.params
+	db.query("INSER INTO users (firstName, lastName) values ($1, $2)", [earchTerm], function (err, result) {
+		if(err) {
+			return console.error('error running query', err);
+		}
+		res.status(200).json(result.rows);
+	});
+}
 // router.get('/users/:id', db.getUser);
 // router.post('/users', db.createUser);
 // router.put('/users', db.updateUser);
@@ -35,5 +52,6 @@ function getUser(req, res, next) {
 
 module.exports = {
     getUsers: getUsers,
-    getUser: getUser
+	getUserByLastNameOrId: getUserByLastNameOrId,
+    createUser: createUser
 }

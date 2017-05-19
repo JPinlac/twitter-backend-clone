@@ -8,8 +8,8 @@ router.get('/', function(req, res, next) {
 var db = require('./queries');
 
 router.get('/users', db.getUsers);
-router.get('/users/:id', db.getUser);
-// router.post('/users', db.createUser);
+router.get('/users/:id', db.getUserByLastNameOrId);
+router.post('/users', db.createUser);
 // router.put('/users', db.updateUser);
 // router.delete('/users/:id', db.deleteUser);
 

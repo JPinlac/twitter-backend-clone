@@ -1,5 +1,4 @@
 const pg = require('pg');
-var Pool = require('pg').Pool;
 
 var config = {
   user: 'jpinlac',
